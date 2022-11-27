@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="ADO.NET_Task2.Views.NoResultFoundUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ADO.NET_Task2.Views"
+             mc:Ignorable="d" 
+      Height="400"
+             Width="800"
+             Background="White">
+    <Grid>
+        <Canvas>
+            <Image Source="\Images\noresult.png" Height="145" Width="144" Canvas.Left="328" Canvas.Top="35" HorizontalAlignment="Left" VerticalAlignment="Top"></Image>
+            <TextBlock FontWeight="Medium" FontSize="30" Width="288" Canvas.Left="270" Canvas.Top="200" RenderTransformOrigin="0.545,0.39">No results found</TextBlock>
+            <TextBlock Foreground="Gray" FontSize="22" Width="884" Canvas.Left="240" Canvas.Top="245" RenderTransformOrigin="0.545,0.39" HorizontalAlignment="Left" VerticalAlignment="Center">Your search returned no results.</TextBlock>
+        </Canvas>
+    </Grid>
+</UserControl>
