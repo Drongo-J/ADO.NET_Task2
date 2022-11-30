@@ -85,5 +85,66 @@ namespace ADO.NET_Task2.Helpers
                 MessageBox.Show(App.Current.MainWindow, $"Author added successfully!", "Success!", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, MessageBoxOptions.RightAlign);
             }
         }
+
+        public static void SaveChangesToDatabase()
+        {
+            using (conn = new SqlConnection())
+            {
+                conn.ConnectionString = cs;
+                conn.Open();
+
+                //set = _set;
+                da = new SqlDataAdapter();
+                set = new DataSet();
+
+                string query = "UPDATE Authors SET FirstName=@firstname, LastName=@lastname " +
+                    "WHERE Id = @authorID";
+
+                if (App.AuthorsDataGrid.Items.Count != 1)
+                {
+                    for (int x = 0; x < App.AuthorsDataGrid.Items.Count - 1; x++)
+                    {
+                        DataRowView myRow = (DataRowView)App.AuthorsDataGrid.Items[x];
+                        //string myvalue = Convert.ToInt32(myRow);
+                        var author = new Author()
+                        {
+                            Id = myRow.Row.ItemArray[0].ToString(),
+                            FirstName = myRow.Row.ItemArray[1].ToString(),
+                            LastName = myRow.Row.ItemArray[2].ToString(),
+                        };
+
+                        var param1 = new SqlParameter()
+                        {
+                            Value = author.Id,
+                            ParameterName = "@authorId",
+                            SqlDbType = SqlDbType.NVarChar
+                        };
+                        var param2 = new SqlParameter()
+                        {
+                            Value = author.FirstName,
+                            ParameterName = "@firstname",
+                            SqlDbType = SqlDbType.NVarChar
+                        };
+                        var param3 = new SqlParameter()
+                        {
+                            Value = author.LastName,
+                            ParameterName = "@lastname",
+                            SqlDbType = SqlDbType.NVarChar
+                        };
+
+                        da.UpdateCommand = new SqlCommand(query, conn);
+                        da.UpdateCommand.Parameters.Add(param1);
+                        da.UpdateCommand.Parameters.Add(param2);
+                        da.UpdateCommand.Parameters.Add(param3);
+                        da.UpdateCommand.ExecuteNonQuery();
+                    }
+                }
+
+                set.Clear();
+                da.SelectCommand = new SqlCommand("SELECT * FROM Authors", conn);
+                da.Fill(set, "Authors");
+                MessageBox.Show(App.Current.MainWindow, $"Changes were saved successfully!", "Success!", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, MessageBoxOptions.RightAlign);
+            }
+        }
     }
 }

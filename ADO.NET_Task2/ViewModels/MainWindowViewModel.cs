@@ -46,7 +46,7 @@ namespace ADO.NET_Task2.ViewModels
 
                 var IDs = new List<string>();
                 if (App.AuthorsDataGrid.Items.Count != 1)
-                {   
+                {
                     foreach (var item in App.AuthorsDataGrid.SelectedItems)
                     {
                         DataRowView myRow = (DataRowView)item;
@@ -64,14 +64,15 @@ namespace ADO.NET_Task2.ViewModels
                 DatabaseHelper.GetAuthorsFromDb();
             });
 
-            SaveChangesCommand = new RelayCommand((s) => 
+            SaveChangesCommand = new RelayCommand((s) =>
             {
-                SqlCommand command = new SqlCommand("SELECT * FROM Authors", DatabaseHelper.conn);
+                //SqlCommand command = new SqlCommand("SELECT * FROM Authors", DatabaseHelper.conn);
                 //DatabaseHelper.da.Update(DatabaseHelper.set,"Authors");
-                DatabaseHelper.da.SelectCommand = command;
-                DatabaseHelper.set.Clear();
-                DatabaseHelper.da.Fill(DatabaseHelper.set,"Authors");
-                MessageBox.Show(App.Current.MainWindow, $"Changes were saved successfully!", "Success!", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, MessageBoxOptions.RightAlign);
+                //DatabaseHelper.da.SelectCommand = command;
+                //DatabaseHelper.set.Clear();
+                //DatabaseHelper.da.Fill(DatabaseHelper.set,"Authors");
+
+                DatabaseHelper.SaveChangesToDatabase();
             });
         }
     }
